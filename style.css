@@ -1,0 +1,362 @@
+/* =========================
+RESET
+========================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #0b0b0b;
+  color: #f5f5f5;
+  line-height: 1.6;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* =========================
+NAVBAR
+========================= */
+
+.navbar {
+  width: 100%;
+  padding: 28px 7%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #222;
+  position: relative;
+  z-index: 10;
+  background: #0b0b0b;
+}
+
+.logo {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.navbar nav {
+  display: flex;
+  gap: 32px;
+}
+
+.navbar nav a {
+  font-size: 13px;
+  color: #999;
+  transition: 0.3s;
+}
+
+.navbar nav a:hover {
+  color: #fff;
+}
+
+/* =========================
+HERO
+========================= */
+
+.hero {
+  min-height: 85vh;
+  padding: 60px 7% 80px 7%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
+  background-image: 
+    linear-gradient(rgba(11, 11, 11, 0.25), rgba(11, 11, 11, 0.25)),
+    url('assets/images/sampul-bryn.jpeg');
+
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.hero-label,
+.section-label {
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: #ddd;
+  margin-bottom: 12px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+}
+
+.hero h1 {
+  display: none;
+}
+
+.hero-description {
+  max-width: 480px;
+  color: #eee;
+  font-size: 15px;
+  margin-top: 180px;
+  margin-bottom: 25px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
+  line-height: 1.5;
+}
+
+.hero-button,
+.contact-button {
+  width: fit-content;
+  padding: 13px 22px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: 0.3s;
+  background: rgba(11, 11, 11, 0.7);
+  backdrop-filter: blur(4px);
+}
+
+.hero-button:hover,
+.contact-button:hover {
+  background: #fff;
+  color: #000;
+}
+
+/* =========================
+MUSIC SECTION
+========================= */
+
+.music-section {
+  padding: 100px 7%;
+  border-top: 1px solid #222;
+}
+
+.section-header {
+  margin-bottom: 50px;
+}
+
+.section-header h2 {
+  font-size: 42px;
+  letter-spacing: -2px;
+}
+
+.music-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+
+/* =========================
+MUSIC CARD
+========================= */
+
+.music-card {
+  background: #111;
+  border: 1px solid #222;
+  transition: 0.3s;
+}
+
+.music-card:hover {
+  border-color: #444;
+  transform: translateY(-4px);
+}
+
+/* =========================
+MUSIC COVER
+========================= */
+
+.music-cover {
+  height: 320px;
+  background: #181818;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.track-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.music-cover > span {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  font-size: 11px;
+  color: #fff;
+  z-index: 2;
+}
+
+.play-button {
+  position: absolute;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  border: 1px solid #555;
+  background: rgba(11, 11, 11, 0.85);
+  color: #fff;
+  cursor: pointer;
+  transition: 0.3s;
+  z-index: 3;
+}
+
+.play-button:hover {
+  background: #fff;
+  color: #000;
+}
+
+.play-button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* =========================
+MUSIC INFO
+========================= */
+
+.music-info {
+  padding: 22px;
+}
+
+.music-info h3 {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.music-info > p {
+  font-size: 12px;
+  color: #777;
+}
+
+.music-bottom {
+  margin-top: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.music-bottom strong {
+  font-size: 14px;
+}
+
+.order-button {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-bottom: 1px solid #555;
+  padding-bottom: 3px;
+}
+
+/* =========================
+ABOUT
+========================= */
+
+.about-section {
+  padding: 140px 7%;
+  border-top: 1px solid #222;
+}
+
+.about-section h2 {
+  font-size: clamp(38px, 5vw, 65px);
+  line-height: 1;
+  letter-spacing: -3px;
+  margin-bottom: 30px;
+}
+
+.about-section > p:last-child {
+  max-width: 500px;
+  color: #888;
+}
+
+/* =========================
+CONTACT
+========================= */
+
+.contact-section {
+  padding: 120px 7%;
+  border-top: 1px solid #222;
+}
+
+.contact-section h2 {
+  font-size: 45px;
+  letter-spacing: -2px;
+  margin-bottom: 15px;
+}
+
+.contact-section > p:nth-of-type(2) {
+  color: #888;
+  margin-bottom: 30px;
+}
+
+/* =========================
+FOOTER
+========================= */
+
+footer {
+  padding: 30px 7%;
+  border-top: 1px solid #222;
+  color: #555;
+  font-size: 11px;
+}
+
+/* =========================
+MOBILE (< 768px)
+========================= */
+
+@media (max-width: 768px) {
+
+  .navbar {
+    padding: 20px 5%;
+  }
+
+  .navbar nav {
+    gap: 15px;
+  }
+
+  .navbar nav a {
+    font-size: 11px;
+  }
+
+  /* KHUSUS HERO DI HP:
+     Penyesuaian background-size & position agar gambar landscape 
+     logo BRYN STUDIO tidak di-zoom secara ekstrim. */
+  .hero {
+    min-height: 300px; 
+    padding: 30px 5%;
+    background-size: contain; 
+    background-position: center top 20px;
+    background-color: #0b0b0b;
+    justify-content: flex-end;
+  }
+
+  .hero-description {
+    margin-top: 0;
+    font-size: 13px;
+    margin-bottom: 15px;
+  }
+
+  .music-section,
+  .about-section,
+  .contact-section {
+    padding: 60px 5%;
+  }
+
+  .music-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .music-cover {
+    height: auto;
+    aspect-ratio: 1 / 1;
+  }
+
+  .contact-section h2 {
+    font-size: 32px;
+  }
+}

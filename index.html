@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Store</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <header class="navbar">
+        <div class="logo">BRYN MUSIC STORE</div>
+
+        <nav>
+            <a href="#music">Music</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+
+    <!-- HERO -->
+    <section class="hero">
+        <p class="hero-label"></p>
+        
+        <h1>
+            <br>
+        </h1>
+
+        <p class="hero-description">
+            
+        </p>
+
+        <a href="#music" class="hero-button">
+            Explore Music
+        </a>
+    </section>
+
+
+    <!-- MUSIC CATALOG -->
+    <section id="music" class="music-section">
+
+        <div class="section-header">
+            <p class="section-label">COLLECTION</p>
+            <h2>Music Catalog</h2>
+        </div>
+
+        <!-- WADAH KATALOG DENGAN RENDER DINAMIS -->
+        <div class="music-grid" id="musicGrid">
+            <!-- Lagu dimuat otomatis dari Supabase -->
+        </div>
+
+    </section>
+
+
+    <!-- ABOUT -->
+    <section id="about" class="about-section">
+
+        <p class="section-label">ABOUT</p>
+
+        <h2>
+            Original music,<br>
+            made with purpose.
+        </h2>
+
+        <p>
+            Koleksi musik orisinal yang dirancang khusus untuk proyek kreatif, konten, dan kebutuhan personal.
+        </p>
+
+    </section>
+
+
+    <!-- CONTACT -->
+    <section id="contact" class="contact-section">
+
+        <p class="section-label">CONTACT</p>
+
+        <h2>Interested in a track?</h2>
+
+        <p>
+            Silakan hubungi kami secara langsung melalui WhatsApp untuk mendapatkan informasi mengenai pembelian.
+        </p>
+
+        <a
+            href="https://wa.me/+6289607989695?text=Halo%20Bryn%20Studio,%20saya%20tertarik%20untuk%20membeli%20lagu%20di%20website"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="contact-button">
+            Contact via WhatsApp
+        </a>
+
+    </section>
+
+
+    <!-- FOOTER -->
+    <footer>
+        <p>© 2026 Music Store. All rights reserved.</p>
+    </footer>
+
+
+    <!-- SUPABASE SDK CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- FETCH & PLAY MUSIC SCRIPT -->
+    <script>
+        // URL SUDAH DIPERBAIKI (MENGHAPUS TYPO 'xwxx')
+        const SUPABASE_URL = 'https://xwxxtvwquhqnzffppxos.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_o4WfO8CS1nj4bIfDUDJXNQ_cy-Satsr';
+
+        const { createClient } = supabase;
+        const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        // FUNGSI MEMUAT LAGU DARI DATABASE
+        async function fetchSongs() {
+            const musicGrid = document.getElementById("musicGrid");
+            musicGrid.innerHTML = "<p>Memuat lagu...</p>";
+
+            try {
+                const { data: songs, error } = await supabaseClient
+                    .from('songs')
+                    .select('*')
+                    .order('id', { ascending: false });
+
+                if (error) throw error;
+
+                if (!songs || songs.length === 0) {
+                    musicGrid.innerHTML = "<p>Belum ada lagu yang tersedia.</p>";
+                    return;
+                }
+
+                musicGrid.innerHTML = "";
+
+                songs.forEach((song, index) => {
+                    const number = String(index + 1).padStart(2, '0');
+                    
+                    const card = document.createElement("article");
+                    card.className = "music-card";
+                    card.innerHTML = `
+                        <div class="music-cover">
+                            <span>${number}</span>
+                            <img src="assets/images/logo-bryn.jpeg" alt="Bryn Logo" class="track-logo" onerror="this.src='https://via.placeholder.com/150'">
+                            <button class="play-button" data-audio="audio-${song.id}">▶</button>
+                            <audio id="audio-${song.id}" src="${song.audio_url}" preload="metadata"></audio>
+                        </div>
+                        <div class="music-info">
+                            <h3>${song.title}</h3>
+                            <p>Bryn · Studio</p>
+                            <div class="music-bottom">
+                                <strong></strong>
+                                <a href="https://wa.me/+6289607989695?text=Halo%20Bryn%20Studio,%20saya%20tertarik%20untuk%20membeli%20lagu%20${encodeURIComponent(song.title)}" target="_blank" class="order-button">Beli via WA</a>
+                            </div>
+                        </div>
+                    `;
+                    musicGrid.appendChild(card);
+                });
+
+                initAudioPlayer();
+
+            } catch (err) {
+                console.error("Gagal mengambil lagu:", err);
+                musicGrid.innerHTML = `<p style="color:red">Gagal memuat katalog lagu: ${err.message}</p>`;
+            }
+        }
+
+        // FUNGSI LOGIKA PEMUTAR AUDIO
+        function initAudioPlayer() {
+            const playButtons = document.querySelectorAll(".play-button");
+            const audios = document.querySelectorAll("audio");
+
+            playButtons.forEach(button => {
+                button.addEventListener("click", function () {
+                    const audioId = this.dataset.audio;
+                    const audio = document.getElementById(audioId);
+
+                    if (!audio) return;
+
+                    audios.forEach(otherAudio => {
+                        if (otherAudio !== audio) {
+                            otherAudio.pause();
+                            otherAudio.currentTime = 0;
+                        }
+                    });
+
+                    playButtons.forEach(otherButton => {
+                        if (otherButton !== this) {
+                            otherButton.textContent = "▶";
+                        }
+                    });
+
+                    if (audio.paused) {
+                        audio.play();
+                        this.textContent = "Ⅱ";
+                    } else {
+                        audio.pause();
+                        this.textContent = "▶";
+                    }
+
+                    audio.onended = function () {
+                        button.textContent = "▶";
+                    };
+                });
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", fetchSongs);
+    </script>
+
+</body>
+</html>
