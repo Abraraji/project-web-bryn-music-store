@@ -15,4 +15,4 @@ Platform katalog musik interaktif berbasis web untuk memamerkan dan mengelola au
 - **Deployment:** Vercel
 
 ## Live Demo
-Coba aplikasi secara langsung di:https://bryn-music.vercel.app/
+Coba aplikasi secara langsung di:https://bryn-music-store.vercel.app/
